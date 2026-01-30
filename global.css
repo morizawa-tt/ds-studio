@@ -1,0 +1,183 @@
+/* DS studio - modern minimal (Vue3 + Vite). 可替换成 Semi Design Vue 组件库 */
+:root{
+  /*
+   * Refined colour palette & sizing for a more polished product feel.
+   * The background and panels are slightly lighter with more subtle
+   * translucency to add depth without overpowering the content. Text
+   * colours have been softened and spacing tightened to improve
+   * readability. The shadow is a touch softer but larger for a
+   * floating card effect. Adjust these variables to tune the look.
+   */
+  --ds-bg: #0b132b;
+  --ds-panel: rgba(255,255,255,.045);
+  --ds-panel-2: rgba(255,255,255,.025);
+  --ds-border: rgba(255,255,255,.10);
+  --ds-border-2: rgba(255,255,255,.18);
+  --ds-text: rgba(240,242,245,.94);
+  --ds-subtext: rgba(170,176,192,.72);
+  --ds-muted: rgba(130,140,160,.58);
+  /* primary accent colour inspired by Semi Design (purplish tone) */
+  --ds-brand: #7262fd;
+  --ds-danger: #ff4d4f;
+  --ds-ok: #4cd964;
+  --ds-radius: 12px;
+  --ds-shadow: 0 12px 32px rgba(0,0,0,.42);
+  --ds-font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+
+  /* Topbar background colour for dark mode. This variable is used in
+   * TopBar.vue to set the header background. Defining it here allows
+   * the theme to override the value for light mode. */
+  --ds-topbar-bg: rgba(11,15,27,.92);
+}
+
+/* Light mode variables override. When the `data-mode="light"` attribute is set on the root
+ * element (html), these variables override the dark defaults to produce a modern,
+ * bright interface inspired by Semi Design. Colours are lighter and shadows are
+ * softer. The brand colour remains consistent across modes. */
+:root[data-mode='light']{
+  --ds-bg: #f5f7fa;
+  --ds-panel: rgba(0,0,0,.02);
+  --ds-panel-2: rgba(0,0,0,.01);
+  --ds-border: rgba(0,0,0,.10);
+  --ds-border-2: rgba(0,0,0,.18);
+  --ds-text: #1f2937;
+  --ds-subtext: #6b7280;
+  --ds-muted: #9ca3af;
+  /* keep same brand colour for consistency */
+  --ds-brand: #7262fd;
+  --ds-danger: #e5484d;
+  --ds-ok: #4cd964;
+  --ds-radius: 12px;
+  --ds-shadow: 0 6px 16px rgba(0,0,0,.08);
+
+  /* Topbar background colour for light mode */
+  --ds-topbar-bg: rgba(255,255,255,.92);
+}
+
+*{ box-sizing: border-box; }
+html, body{ height: 100%; }
+body{
+  margin: 0;
+  font-family: var(--ds-font);
+  font-size: 14px;
+  /*
+   * Rework the decorative radial gradients to be more diffuse and subtle,
+   * allowing the core UI elements to stand out. The colours fade sooner
+   * and the overall contribution is reduced to avoid distraction.
+   */
+  background: radial-gradient(1200px 800px at 20% 10%, rgba(114,98,253,.08), transparent 60%),
+              radial-gradient(900px 600px at 90% 15%, rgba(99,102,241,.08), transparent 60%),
+              var(--ds-bg);
+  color: var(--ds-text);
+}
+
+/* Override the decorative background for light mode. Lighter gradients with a longer fade are used
+ * to gently hint colour without distracting from content. */
+html[data-mode='light'] body{
+  background: radial-gradient(1200px 800px at 20% 10%, rgba(114,98,253,.07), transparent 70%),
+              radial-gradient(900px 600px at 90% 15%, rgba(99,102,241,.06), transparent 70%),
+              var(--ds-bg);
+}
+
+a{ color: inherit; text-decoration: none; }
+button, input, select, textarea{ font-family: inherit; }
+
+.ds-card{
+  background: linear-gradient(180deg, var(--ds-panel), var(--ds-panel-2));
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius);
+  padding: 18px;
+  box-shadow: 0 1px 0 rgba(255,255,255,.03) inset, var(--ds-shadow);
+}
+
+.ds-row{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  flex-wrap: wrap;
+}
+.ds-col{ display:flex; flex-direction:column; gap:10px; }
+.ds-divider{ height:1px; background: var(--ds-border); margin: 12px 0; }
+
+.ds-btn{
+  border: 1px solid var(--ds-border-2);
+  /* slightly brighter base for interactive buttons */
+  background: rgba(255,255,255,.06);
+  color: var(--ds-text);
+  padding: 8px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background .15s ease, transform .05s ease;
+}
+.ds-btn:hover{ background: rgba(255,255,255,.12); }
+.ds-btn:active{ transform: translateY(1px); }
+
+.ds-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding: 6px 10px;
+  border:1px solid var(--ds-border);
+  border-radius: 999px;
+  background: rgba(255,255,255,.05);
+}
+
+.ds-input, .ds-select, .ds-textarea{
+  width:100%;
+  border:1px solid var(--ds-border);
+  border-radius: 12px;
+  background: rgba(255,255,255,.035);
+  color: var(--ds-text);
+  padding: 8px 10px;
+  outline:none;
+}
+.ds-input::placeholder{ color: rgba(255,255,255,.38); }
+.ds-input:focus, .ds-select:focus, .ds-textarea:focus{
+  border-color: rgba(114,98,253,.65);
+  box-shadow: 0 0 0 3px rgba(114,98,253,.18);
+}
+
+.ds-kbd{
+  padding: 2px 8px;
+  border: 1px solid var(--ds-border);
+  border-bottom-color: rgba(255,255,255,.28);
+  background: rgba(0,0,0,.22);
+  border-radius: 10px;
+  font-size: 12px;
+  color: var(--ds-subtext);
+}
+
+.ds-tag{
+  display:inline-flex;
+  align-items:center;
+  padding: 2px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--ds-border);
+  background: rgba(255,255,255,.05);
+  color: var(--ds-subtext);
+  font-size: 12px;
+  white-space: nowrap; /* 修复标题窜行/逐字换行 */
+}
+
+.ds-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(114,98,253,.35);
+  background: rgba(114,98,253,.12);
+  color: rgba(255,255,255,.92);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+/* nicer scrollbars (WebKit) */
+*::-webkit-scrollbar{ width: 10px; height: 10px; }
+*::-webkit-scrollbar-thumb{
+  background: rgba(255,255,255,.14);
+  border: 2px solid rgba(0,0,0,0);
+  background-clip: padding-box;
+  border-radius: 999px;
+}
+*::-webkit-scrollbar-thumb:hover{ background: rgba(255,255,255,.20); }
