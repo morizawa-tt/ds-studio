@@ -1,0 +1,48 @@
+name: Deploy to GitHub Pages
+
+# This workflow builds the project using Node and deploys the `dist` folder
+# to GitHub Pages whenever changes are pushed to the `main` branch. It uses
+# the official actions for uploading and deploying pages. Note that the
+# `base` option in `vite.config.ts` is set to `/ds-studio/` so that assets
+# load correctly from https://USERNAME.github.io/ds-studio/.
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+      - name: Install dependencies
+        run: |
+          npm install --legacy-peer-deps
+      - name: Build
+        run: |
+          npm run build
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: dist
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
