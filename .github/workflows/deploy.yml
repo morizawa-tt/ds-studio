@@ -8,8 +8,9 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [mainn   
-      workflow_dispatch::
+      branches:
+      - main
+    orkflow_dispatch:
 
 
 permissions:
