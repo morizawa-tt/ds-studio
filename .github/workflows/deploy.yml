@@ -10,7 +10,7 @@ on:
   push:
       branches:
       - main
-    orkflow_dispatch:
+    workflow_dispath::
 
 
 permissions:
